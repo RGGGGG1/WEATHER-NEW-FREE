@@ -55,20 +55,26 @@
             font-size: 12px;
         }
 
-        /* Анимации для разных погодных условий */
+        /* Анимации для различных погодных условий */
+
         @keyframes rain {
-            0% { top: -10px; }
-            100% { top: 110px; }
+            0% { top: -10px; opacity: 1; }
+            100% { top: 110px; opacity: 0; }
         }
 
         @keyframes snow {
-            0% { top: -10px; opacity: 1; }
-            100% { top: 110px; opacity: 0; }
+            0% { top: -10px; opacity: 1; transform: rotate(0deg); }
+            100% { top: 110px; opacity: 0; transform: rotate(360deg); }
         }
 
         @keyframes cloudMove {
             0% { left: -60px; }
             100% { left: 120px; }
+        }
+
+        @keyframes rotateSun {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .rain {
@@ -85,8 +91,8 @@
             position: absolute;
             top: 0;
             left: 30px;
-            width: 2px;
-            height: 2px;
+            width: 3px;
+            height: 3px;
             background-color: rgba(255, 255, 255, 0.9);
             animation: snow 1.5s infinite linear;
         }
@@ -102,6 +108,17 @@
             animation: cloudMove 10s infinite linear;
         }
 
+        .cloud-dark {
+            position: absolute;
+            top: 10px;
+            left: -60px;
+            width: 80px;
+            height: 40px;
+            background-color: rgba(100, 100, 100, 0.7);
+            border-radius: 20px;
+            animation: cloudMove 10s infinite linear;
+        }
+
         .sun {
             position: absolute;
             top: 5px;
@@ -113,9 +130,16 @@
             animation: rotateSun 5s infinite linear;
         }
 
-        @keyframes rotateSun {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .sun-rays {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 30px 30px rgba(255, 255, 0, 0.6);
+            animation: rotateSun 15s infinite linear;
         }
     </style>
 </head>
@@ -149,9 +173,9 @@
             document.getElementById('description').innerText = description.charAt(0).toUpperCase() + description.slice(1);
             document.getElementById('wind').innerText = `Ветер: ${windSpeed} м/с`;
 
-            // Clear the previous weather animation
+            // Clear previous weather effects
             const weatherIcon = document.getElementById('weather-icon');
-            weatherIcon.innerHTML = ''; // Clear the previous weather effects
+            weatherIcon.innerHTML = '';
 
             if (weatherId >= 200 && weatherId < 300) {
                 // Thunderstorm
@@ -203,7 +227,10 @@
         function createSunEffect(weatherIcon) {
             const sun = document.createElement('div');
             sun.classList.add('sun');
+            const sunRays = document.createElement('div');
+            sunRays.classList.add('sun-rays');
             weatherIcon.appendChild(sun);
+            weatherIcon.appendChild(sunRays);
         }
 
         function createCloudEffect(weatherIcon) {
