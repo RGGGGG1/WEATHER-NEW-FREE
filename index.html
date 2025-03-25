@@ -60,16 +60,10 @@
             padding: 0;
         }
 
-        /* Значок ветра как изображение */
-        #wind-icon {
-            width: 18px;
-            height: 18px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 3px;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/67/Wind_icon_1.png'); /* Иконка ветра */
+        /* Добавим слово "Ветер:" в текст */
+        #wind-label {
+            font-size: 16px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -79,8 +73,8 @@
         <div class="temperature" id="temp">--°C</div>
         <div class="weather-info" id="description">Загрузка...</div>
         <div class="weather-info" id="wind">
-            <!-- Иконка ветра как изображение -->
-            <div id="wind-icon"></div>
+            <!-- Слово "Ветер:" вместо иконки -->
+            <div id="wind-label">Ветер:</div>
             <span id="wind-speed">-- м/с</span>
         </div>
     </div>
