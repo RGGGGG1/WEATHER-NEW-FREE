@@ -35,10 +35,9 @@
         #weather-icon {
             width: 60px;
             height: 60px;
-            margin-bottom: 2px;
+            margin-bottom: 5px;
             background-size: contain;
             background-repeat: no-repeat;
-            position: relative;
         }
 
         .weather-info {
@@ -55,97 +54,6 @@
         #wind {
             font-size: 9px;
         }
-
-        /* Анимации для различных погодных условий */
-
-        @keyframes rain {
-            0% { top: -10px; opacity: 1; }
-            100% { top: 110px; opacity: 0; }
-        }
-
-        @keyframes snow {
-            0% { top: -10px; opacity: 1; transform: rotate(0deg); }
-            100% { top: 110px; opacity: 0; transform: rotate(360deg); }
-        }
-
-        @keyframes cloudMove {
-            0% { left: -60px; }
-            100% { left: 120px; }
-        }
-
-        @keyframes sunMove {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .rain {
-            position: absolute;
-            top: 0;
-            left: 30px;
-            width: 2px;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.6);
-            animation: rain 1s infinite linear;
-        }
-
-        .snow {
-            position: absolute;
-            top: 0;
-            left: 30px;
-            width: 3px;
-            height: 3px;
-            background-color: rgba(255, 255, 255, 0.9);
-            animation: snow 1.5s infinite linear;
-        }
-
-        /* Реалистичные облака */
-        .cloud {
-            position: absolute;
-            top: 10px;
-            left: -60px;
-            width: 90px;
-            height: 50px;
-            background: #d0d0d0;
-            border-radius: 50%;
-            box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.3), -10px -5px 15px rgba(0, 0, 0, 0.2);
-            animation: cloudMove 10s infinite linear;
-        }
-
-        .cloud-dark {
-            position: absolute;
-            top: 10px;
-            left: -60px;
-            width: 90px;
-            height: 50px;
-            background: #6a6a6a;
-            border-radius: 50%;
-            box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.3), -10px -5px 15px rgba(0, 0, 0, 0.2);
-            animation: cloudMove 10s infinite linear;
-        }
-
-        .sun {
-            position: absolute;
-            top: 5px;
-            left: 30px;
-            width: 20px;
-            height: 20px;
-            background-color: #FFD700;
-            border-radius: 50%;
-            animation: sunMove 5s infinite linear;
-        }
-
-        .sun-rays {
-            position: absolute;
-            top: 10px;
-            left: 0;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 30px 30px rgba(255, 255, 0, 0.6);
-            animation: sunMove 15s infinite linear;
-        }
-
     </style>
 </head>
 <body>
@@ -173,79 +81,44 @@
             const windSpeed = data.wind.speed;
             const weatherId = data.weather[0].id;
 
-            // Update temperature, description, and wind speed
+            // Обновляем температуру, описание и скорость ветра
             document.getElementById('temp').innerText = `${Math.round(temperature)}°C`;
             document.getElementById('description').innerText = description.charAt(0).toUpperCase() + description.slice(1);
             document.getElementById('wind').innerText = `Ветер: ${windSpeed} м/с`;
 
-            // Clear previous weather effects
+            // Обновляем иконку погоды в зависимости от погодных условий
             const weatherIcon = document.getElementById('weather-icon');
-            weatherIcon.innerHTML = '';
+            let iconCode;
 
             if (weatherId >= 200 && weatherId < 300) {
-                // Thunderstorm
-                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/11d.png')";
+                // Гроза
+                iconCode = '11d';
             } else if (weatherId >= 300 && weatherId < 400) {
-                // Drizzle (light rain)
-                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/09d.png')";
-                createRainEffect(weatherIcon);
+                // Легкий дождик
+                iconCode = '09d';
             } else if (weatherId >= 500 && weatherId < 600) {
-                // Rain
-                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/10d.png')";
-                createRainEffect(weatherIcon, 10);  // More rain drops
+                // Дождь
+                iconCode = '10d';
             } else if (weatherId >= 600 && weatherId < 700) {
-                // Snow
-                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/13d.png')";
-                createSnowEffect(weatherIcon);
+                // Снег
+                iconCode = '13d';
             } else if (weatherId >= 700 && weatherId < 800) {
-                // Mist, fog
-                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/50d.png')";
+                // Туман
+                iconCode = '50d';
             } else if (weatherId === 800) {
-                // Clear sky
-                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/01d.png')";
-                createSunEffect(weatherIcon);
+                // Ясное небо
+                iconCode = '01d';
             } else if (weatherId > 800) {
-                // Cloudy
-                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/03d.png')";
-                createCloudEffect(weatherIcon);
+                // Облачно
+                iconCode = '03d';
             }
-        }
 
-        function createRainEffect(weatherIcon, count = 5) {
-            for (let i = 0; i < count; i++) {
-                const rainDrop = document.createElement('div');
-                rainDrop.classList.add('rain');
-                rainDrop.style.left = `${Math.random() * 50 + 5}px`; // Random horizontal position
-                weatherIcon.appendChild(rainDrop);
-            }
-        }
-
-        function createSnowEffect(weatherIcon) {
-            for (let i = 0; i < 5; i++) {
-                const snowFlake = document.createElement('div');
-                snowFlake.classList.add('snow');
-                snowFlake.style.left = `${Math.random() * 50 + 5}px`; // Random horizontal position
-                weatherIcon.appendChild(snowFlake);
-            }
-        }
-
-        function createSunEffect(weatherIcon) {
-            const sun = document.createElement('div');
-            sun.classList.add('sun');
-            const sunRays = document.createElement('div');
-            sunRays.classList.add('sun-rays');
-            weatherIcon.appendChild(sun);
-            weatherIcon.appendChild(sunRays);
-        }
-
-        function createCloudEffect(weatherIcon) {
-            const cloud = document.createElement('div');
-            cloud.classList.add('cloud');
-            weatherIcon.appendChild(cloud);
+            // Обновляем иконку
+            weatherIcon.style.backgroundImage = `url('https://openweathermap.org/img/wn/${iconCode}.png')`;
         }
 
         fetchWeather();
-        setInterval(fetchWeather, 60000); // Update every minute
+        setInterval(fetchWeather, 60000); // Обновляем каждую минуту
     </script>
 </body>
 </html>
