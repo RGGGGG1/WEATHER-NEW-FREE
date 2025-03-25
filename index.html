@@ -35,25 +35,25 @@
         #weather-icon {
             width: 60px;
             height: 60px;
-            margin-bottom: 2px; /* Уменьшил отступ для большего пространства */
+            margin-bottom: 2px;
             background-size: contain;
             background-repeat: no-repeat;
             position: relative;
         }
 
         .weather-info {
-            font-size: 10px; /* Увеличил размер шрифта */
+            font-size: 10px;
             margin: 0;
-            padding: 1px 0; 
+            padding: 1px 0;
         }
 
         .temperature {
-            font-size: 16px; /* Увеличил размер шрифта для температуры */
+            font-size: 16px;
             font-weight: bold;
         }
 
         #wind {
-            font-size: 9px; /* Для скорости ветра оставим более маленький размер шрифта */
+            font-size: 9px;
         }
 
         /* Анимации для различных погодных условий */
@@ -98,14 +98,16 @@
             animation: snow 1.5s infinite linear;
         }
 
+        /* Реалистичные облака */
         .cloud {
             position: absolute;
             top: 10px;
             left: -60px;
-            width: 80px;
-            height: 40px;
-            background-color: rgba(200, 200, 200, 0.7);
-            border-radius: 20px;
+            width: 90px;
+            height: 50px;
+            background: #d0d0d0;
+            border-radius: 50%;
+            box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.3), -10px -5px 15px rgba(0, 0, 0, 0.2);
             animation: cloudMove 10s infinite linear;
         }
 
@@ -113,10 +115,11 @@
             position: absolute;
             top: 10px;
             left: -60px;
-            width: 80px;
-            height: 40px;
-            background-color: rgba(100, 100, 100, 0.7);
-            border-radius: 20px;
+            width: 90px;
+            height: 50px;
+            background: #6a6a6a;
+            border-radius: 50%;
+            box-shadow: 10px 5px 20px rgba(0, 0, 0, 0.3), -10px -5px 15px rgba(0, 0, 0, 0.2);
             animation: cloudMove 10s infinite linear;
         }
 
@@ -142,6 +145,7 @@
             box-shadow: 0 0 30px 30px rgba(255, 255, 0, 0.6);
             animation: sunMove 15s infinite linear;
         }
+
     </style>
 </head>
 <body>
