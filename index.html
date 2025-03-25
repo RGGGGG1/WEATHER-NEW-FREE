@@ -8,11 +8,11 @@
         body {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            width: 120px;
+            height: 120px;
             background-color: #121212;
+            overflow: hidden;
+            position: relative;
         }
 
         #weather-widget {
@@ -23,43 +23,35 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 5px;
-            border-radius: 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         #weather-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;  /* Увеличен размер иконки */
+            height: 60px; /* Увеличен размер иконки */
             margin-bottom: 10px;
             background-size: contain;
             background-repeat: no-repeat;
         }
 
         .weather-info {
-            font-size: 10px;
+            font-size: 9px; /* Увеличен размер текста */
             margin: 0;
         }
 
         .temperature {
-            font-size: 16px;
+            font-size: 18px; /* Увеличен размер температуры */
             font-weight: bold;
         }
 
-        @keyframes weatherAnimation {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
+        #wind {
+            font-size: 12px; /* Увеличен размер текста для ветра */
         }
     </style>
 </head>
