@@ -22,13 +22,14 @@
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 10px;
+            padding: 5px;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            position: relative;
         }
 
         #weather-icon {
@@ -37,15 +38,15 @@
             margin-bottom: 10px;
             background-size: contain;
             background-repeat: no-repeat;
-            animation: weatherAnimation 1s infinite;
         }
 
         .weather-info {
-            font-size: 12px;
+            font-size: 10px;
+            margin: 0;
         }
 
         .temperature {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
         }
 
@@ -96,25 +97,25 @@
             const weatherIcon = document.getElementById('weather-icon');
             if (weatherId >= 200 && weatherId < 300) {
                 // Thunderstorm
-                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448126.png')";
+                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/11d.png')";
             } else if (weatherId >= 300 && weatherId < 400) {
                 // Drizzle (light rain)
-                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448089.png')";
+                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/09d.png')";
             } else if (weatherId >= 500 && weatherId < 600) {
                 // Rain
-                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448154.png')";
+                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/10d.png')";
             } else if (weatherId >= 600 && weatherId < 700) {
                 // Snow
-                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448129.png')";
+                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/13d.png')";
             } else if (weatherId >= 700 && weatherId < 800) {
                 // Mist, fog
-                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448140.png')";
+                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/50d.png')";
             } else if (weatherId === 800) {
                 // Clear sky
-                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448133.png')";
+                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/01d.png')";
             } else if (weatherId > 800) {
                 // Cloudy
-                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448134.png')";
+                weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/03d.png')";
             }
         }
 
