@@ -26,44 +26,38 @@
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             position: absolute;
             top: 0;
             left: 0;
+            padding: 5px;
         }
 
         #weather-icon {
-            width: 50px; /* Увеличенный размер иконки */
-            height: 50px; /* Увеличенный размер иконки */
-            margin-bottom: 5px;
+            width: 50px; 
+            height: 50px; 
             background-size: contain;
             background-repeat: no-repeat;
         }
 
         .weather-info {
-            font-size: 16px; /* Размер текста теперь 16px */
+            font-size: 16px;
             margin: 0;
-            padding: 1px 0;
-            line-height: 1.2; /* Интервал между строками */
+            line-height: 1.2;
         }
 
         .temperature {
-            font-size: 16px; /* Крупный шрифт для температуры */
+            font-size: 16px;
             font-weight: bold;
-            margin: 0;
         }
 
         #wind {
-            font-size: 16px; /* Размер текста для ветра */
-            margin: 0;
-            padding: 0;
+            font-size: 16px;
         }
 
-        /* Добавим слово "Ветер:" в текст */
-        #wind-label {
-            font-size: 16px;
-            margin-bottom: 5px;
+        .wind-label {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -73,8 +67,7 @@
         <div class="temperature" id="temp">--°C</div>
         <div class="weather-info" id="description">Загрузка...</div>
         <div class="weather-info" id="wind">
-            <!-- Слово "Ветер:" вместо иконки -->
-            <div id="wind-label">Ветер:</div>
+            <div class="wind-label">Ветер:</div>
             <span id="wind-speed">-- м/с</span>
         </div>
     </div>
@@ -106,29 +99,22 @@
             let iconCode;
 
             if (weatherId >= 200 && weatherId < 300) {
-                // Гроза
-                iconCode = '11d';
+                iconCode = '11d';  // Гроза
             } else if (weatherId >= 300 && weatherId < 400) {
-                // Легкий дождик
-                iconCode = '09d';
+                iconCode = '09d';  // Легкий дождик
             } else if (weatherId >= 500 && weatherId < 600) {
-                // Дождь
-                iconCode = '10d';
+                iconCode = '10d';  // Дождь
             } else if (weatherId >= 600 && weatherId < 700) {
-                // Снег
-                iconCode = '13d';
+                iconCode = '13d';  // Снег
             } else if (weatherId >= 700 && weatherId < 800) {
-                // Туман
-                iconCode = '50d';
+                iconCode = '50d';  // Туман
             } else if (weatherId === 800) {
-                // Ясное небо
-                iconCode = '01d';
+                iconCode = '01d';  // Ясное небо
             } else if (weatherId > 800) {
-                // Облачно
-                iconCode = '03d';
+                iconCode = '03d';  // Облачно
             }
 
-            // Обновляем иконку погоды
+            // Устанавливаем иконку
             weatherIcon.style.backgroundImage = `url('https://openweathermap.org/img/wn/${iconCode}.png')`;
         }
 
