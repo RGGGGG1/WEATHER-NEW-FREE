@@ -35,7 +35,7 @@
         #weather-icon {
             width: 60px;
             height: 60px;
-            margin-bottom: 5px; /* Уменьшил отступ, чтобы текст был ближе */
+            margin-bottom: 5px; 
             background-size: contain;
             background-repeat: no-repeat;
             position: relative;
@@ -44,16 +44,16 @@
         .weather-info {
             font-size: 9px;
             margin: 0;
-            padding: 1px 0; /* Уменьшил отступы между строками текста */
+            padding: 1px 0; 
         }
 
         .temperature {
-            font-size: 14px; /* Уменьшил размер шрифта для компактности */
+            font-size: 14px;
             font-weight: bold;
         }
 
         #wind {
-            font-size: 10px; /* Уменьшил размер шрифта */
+            font-size: 10px;
         }
 
         /* Анимации для различных погодных условий */
@@ -73,7 +73,7 @@
             100% { left: 120px; }
         }
 
-        @keyframes rotateSun {
+        @keyframes sunMove {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
@@ -128,7 +128,7 @@
             height: 20px;
             background-color: #FFD700;
             border-radius: 50%;
-            animation: rotateSun 5s infinite linear;
+            animation: sunMove 5s infinite linear;
         }
 
         .sun-rays {
@@ -140,7 +140,7 @@
             border-radius: 50%;
             border: 5px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 0 30px 30px rgba(255, 255, 0, 0.6);
-            animation: rotateSun 15s infinite linear;
+            animation: sunMove 15s infinite linear;
         }
     </style>
 </head>
