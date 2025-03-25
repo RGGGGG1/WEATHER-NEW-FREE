@@ -33,25 +33,89 @@
         }
 
         #weather-icon {
-            width: 60px;  /* Увеличен размер иконки */
-            height: 60px; /* Увеличен размер иконки */
+            width: 60px;
+            height: 60px;
             margin-bottom: 10px;
             background-size: contain;
             background-repeat: no-repeat;
+            position: relative;
         }
 
         .weather-info {
-            font-size: 9px; /* Увеличен размер текста */
+            font-size: 9px;
             margin: 0;
         }
 
         .temperature {
-            font-size: 18px; /* Увеличен размер температуры */
+            font-size: 18px;
             font-weight: bold;
         }
 
         #wind {
-            font-size: 12px; /* Увеличен размер текста для ветра */
+            font-size: 12px;
+        }
+
+        /* Анимации для разных погодных условий */
+        @keyframes rain {
+            0% { top: -10px; }
+            100% { top: 110px; }
+        }
+
+        @keyframes snow {
+            0% { top: -10px; opacity: 1; }
+            100% { top: 110px; opacity: 0; }
+        }
+
+        @keyframes cloudMove {
+            0% { left: -60px; }
+            100% { left: 120px; }
+        }
+
+        .rain {
+            position: absolute;
+            top: 0;
+            left: 30px;
+            width: 2px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.6);
+            animation: rain 1s infinite linear;
+        }
+
+        .snow {
+            position: absolute;
+            top: 0;
+            left: 30px;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.9);
+            animation: snow 1.5s infinite linear;
+        }
+
+        .cloud {
+            position: absolute;
+            top: 10px;
+            left: -60px;
+            width: 80px;
+            height: 40px;
+            background-color: rgba(200, 200, 200, 0.7);
+            border-radius: 20px;
+            animation: cloudMove 10s infinite linear;
+        }
+
+        .sun {
+            position: absolute;
+            top: 5px;
+            left: 30px;
+            width: 20px;
+            height: 20px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            animation: rotateSun 5s infinite linear;
+        }
+
+        @keyframes rotateSun {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -85,30 +149,67 @@
             document.getElementById('description').innerText = description.charAt(0).toUpperCase() + description.slice(1);
             document.getElementById('wind').innerText = `Ветер: ${windSpeed} м/с`;
 
-            // Update weather icon based on conditions
+            // Clear the previous weather animation
             const weatherIcon = document.getElementById('weather-icon');
+            weatherIcon.innerHTML = ''; // Clear the previous weather effects
+
             if (weatherId >= 200 && weatherId < 300) {
                 // Thunderstorm
                 weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/11d.png')";
             } else if (weatherId >= 300 && weatherId < 400) {
                 // Drizzle (light rain)
                 weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/09d.png')";
+                createRainEffect(weatherIcon);
             } else if (weatherId >= 500 && weatherId < 600) {
                 // Rain
                 weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/10d.png')";
+                createRainEffect(weatherIcon, 10);  // More rain drops
             } else if (weatherId >= 600 && weatherId < 700) {
                 // Snow
                 weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/13d.png')";
+                createSnowEffect(weatherIcon);
             } else if (weatherId >= 700 && weatherId < 800) {
                 // Mist, fog
                 weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/50d.png')";
             } else if (weatherId === 800) {
                 // Clear sky
                 weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/01d.png')";
+                createSunEffect(weatherIcon);
             } else if (weatherId > 800) {
                 // Cloudy
                 weatherIcon.style.backgroundImage = "url('https://openweathermap.org/img/wn/03d.png')";
+                createCloudEffect(weatherIcon);
             }
+        }
+
+        function createRainEffect(weatherIcon, count = 5) {
+            for (let i = 0; i < count; i++) {
+                const rainDrop = document.createElement('div');
+                rainDrop.classList.add('rain');
+                rainDrop.style.left = `${Math.random() * 50 + 5}px`; // Random horizontal position
+                weatherIcon.appendChild(rainDrop);
+            }
+        }
+
+        function createSnowEffect(weatherIcon) {
+            for (let i = 0; i < 5; i++) {
+                const snowFlake = document.createElement('div');
+                snowFlake.classList.add('snow');
+                snowFlake.style.left = `${Math.random() * 50 + 5}px`; // Random horizontal position
+                weatherIcon.appendChild(snowFlake);
+            }
+        }
+
+        function createSunEffect(weatherIcon) {
+            const sun = document.createElement('div');
+            sun.classList.add('sun');
+            weatherIcon.appendChild(sun);
+        }
+
+        function createCloudEffect(weatherIcon) {
+            const cloud = document.createElement('div');
+            cloud.classList.add('cloud');
+            weatherIcon.appendChild(cloud);
         }
 
         fetchWeather();
