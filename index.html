@@ -55,6 +55,19 @@
 
         #wind {
             font-size: 16px; /* Уменьшенный шрифт для строки "Ветер" */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Иконка ветра */
+        #wind-icon {
+            width: 18px;
+            height: 18px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 3px;
         }
     </style>
 </head>
@@ -63,7 +76,10 @@
         <div id="weather-icon"></div>
         <div class="temperature" id="temp">--°C</div>
         <div class="weather-info" id="description">Загрузка...</div>
-        <div class="weather-info" id="wind">Ветер: -- м/с</div>
+        <div class="weather-info" id="wind">
+            <div id="wind-icon"></div> <!-- Иконка ветра -->
+            <span id="wind-speed">-- м/с</span>
+        </div>
     </div>
 
     <script>
@@ -86,7 +102,7 @@
             // Обновляем температуру, описание и скорость ветра
             document.getElementById('temp').innerText = `${Math.round(temperature)}°C`;
             document.getElementById('description').innerText = description.charAt(0).toUpperCase() + description.slice(1);
-            document.getElementById('wind').innerText = `Ветер: ${windSpeed} м/с`;
+            document.getElementById('wind-speed').innerText = `${windSpeed} м/с`;
 
             // Обновляем иконку погоды в зависимости от погодных условий
             const weatherIcon = document.getElementById('weather-icon');
@@ -115,8 +131,12 @@
                 iconCode = '03d';
             }
 
-            // Обновляем иконку
+            // Обновляем иконку погоды
             weatherIcon.style.backgroundImage = `url('https://openweathermap.org/img/wn/${iconCode}.png')`;
+
+            // Обновляем иконку ветра
+            const windIcon = document.getElementById('wind-icon');
+            windIcon.style.backgroundImage = "url('https://upload.wikimedia.org/wikipedia/commons/6/67/Wind_icon_1.png')"; // Пример иконки ветра
         }
 
         fetchWeather();
