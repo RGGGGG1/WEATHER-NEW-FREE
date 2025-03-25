@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погодный виджет</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+        }
+
+        #weather-widget {
+            width: 120px;
+            height: 120px;
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        #weather-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: weatherAnimation 1s infinite;
+        }
+
+        .weather-info {
+            font-size: 12px;
+        }
+
+        .temperature {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        @keyframes weatherAnimation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="weather-widget">
+        <div id="weather-icon"></div>
+        <div class="temperature" id="temp">--°C</div>
+        <div class="weather-info" id="description">Загрузка...</div>
+        <div class="weather-info" id="wind">Ветер: -- м/с</div>
+    </div>
+
+    <script>
+        const apiKey = '020d0acf66c731a155efa04f08d3667e';
+        const city = 'Kaliningrad,ru';
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=ru`;
+
+        async function fetchWeather() {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            updateWeather(data);
+        }
+
+        function updateWeather(data) {
+            const temperature = data.main.temp;
+            const description = data.weather[0].description;
+            const windSpeed = data.wind.speed;
+            const weatherId = data.weather[0].id;
+
+            // Update temperature, description, and wind speed
+            document.getElementById('temp').innerText = `${Math.round(temperature)}°C`;
+            document.getElementById('description').innerText = description.charAt(0).toUpperCase() + description.slice(1);
+            document.getElementById('wind').innerText = `Ветер: ${windSpeed} м/с`;
+
+            // Update weather icon based on conditions
+            const weatherIcon = document.getElementById('weather-icon');
+            if (weatherId >= 200 && weatherId < 300) {
+                // Thunderstorm
+                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448126.png')";
+            } else if (weatherId >= 300 && weatherId < 400) {
+                // Drizzle (light rain)
+                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448089.png')";
+            } else if (weatherId >= 500 && weatherId < 600) {
+                // Rain
+                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448154.png')";
+            } else if (weatherId >= 600 && weatherId < 700) {
+                // Snow
+                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448129.png')";
+            } else if (weatherId >= 700 && weatherId < 800) {
+                // Mist, fog
+                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448140.png')";
+            } else if (weatherId === 800) {
+                // Clear sky
+                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448133.png')";
+            } else if (weatherId > 800) {
+                // Cloudy
+                weatherIcon.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/3448/3448134.png')";
+            }
+        }
+
+        fetchWeather();
+        setInterval(fetchWeather, 60000); // Update every minute
+    </script>
+</body>
+</html>
